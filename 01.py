@@ -28,6 +28,28 @@ class OpenWeatherAPI:
     def to_csv(self, path):
         self.dataframe.to_csv(path, index=False)
 
+def TEXT(name):return (name, " TEXT")
+def REAL(name):return (name, " REAL")
+def INTEGER(name):return (name, " INTEGER")
+
+class sqlAPI:
+    cnct = None
+    cursor = None
+    column = []
+    tableNames = []
+    def __init__(self, path):
+        self.cnct = sqlite3.connect("data/data.db")
+        self.cursor = self.cnct.cursor()
+    def CreateTable(self, name, column):
+        self.column.append(column)
+        self.tableNames.append(name)
+        s = "CREATE TABLE IF NOT EXISTS " + name + "("
+        for i in self.column:
+            s += i[0] + i[1] + ","; 
+        s = s[0:-1:1] + ")"
+        self.cursor.execute(s)
+
+
 def csvToDatabase():
     data = pd.read_csv("data/data.csv")
     cnct = sqlite3.connect("data/data.db")
@@ -49,14 +71,20 @@ def csvToDatabase():
     cnct.commit()
     cnct.close()
 
+        
 # api = OpenWeatherAPI('2dd249caf078aec871ab451b46fee0a1')
 # data = api.fetch_weather_data('Shenzhen')
 # api.to_csv("data/data.csv")
 # csvToDatabase()
 
-cnct = sqlite3.connect("data/data.db")
-cursor = cnct.cursor()
-cursor.execute("SELECT * FROM weather")
-data = cursor.fetchall()
-print(data)
+# cnct = sqlite3.connect("data/data.db")
+# cursor = cnct.cursor()
+# cursor.execute("SELECT * FROM weather")
+# data = cursor.fetchall()
+# print(data)
 
+# db = sqlAPI("data/data.db")
+# db.CreateTable("test",[TEXT("item1"), INTEGER("item2")])d = 
+
+d = {"a":1, "b":2}
+print(tuple(d.values())[0])
