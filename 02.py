@@ -58,4 +58,4 @@ def calculate_daily_stats(df_forecast):
 # Calculate and save daily statistics to CSV
 daily_stats = calculate_daily_stats(api.dataframe)
 daily_stats.to_csv("data/data2.csv")
-print(daily_stats.head())
+# print(daily_stats.head())
